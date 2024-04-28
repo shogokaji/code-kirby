@@ -1,4 +1,5 @@
 import { k } from "./kaboomCtx";
+import { makeMap } from "./utils";
 
 const gameSetup = async () => {
   k.loadSprite("assets", "./kirby-like.png", {
@@ -19,6 +20,11 @@ const gameSetup = async () => {
   });
 
   k.loadSprite("level-1", "./level-1.png");
+  // 戻り値のオブジェクトのプロパティを変数に格納
+  const { map: level1Layout, spawnPoints: level1SpawnPoints } = await makeMap(
+    k,
+    "level-1",
+  );
 
   k.scene("level-1", () => {
     k.setGravity(2100);
@@ -27,6 +33,8 @@ const gameSetup = async () => {
       k.color(k.Color.fromHex("#f7d7db")),
       k.fixed(),
     ]);
+
+    k.add(level1Layout);
   });
 
   k.go("level-1");
